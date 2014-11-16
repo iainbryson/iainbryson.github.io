@@ -11,11 +11,13 @@ categories: powershell web
 
 Sending an email of a webpage is pretty easy.  That is, it's easy if the page is static or you're generating the webpage on the server (e.g. with PHP or ASP.NET).  If it's not -- if you have some client-side code which alters the page -- then it's not so easy.
 
-This article discusses the paths I went along to mail pages from a fancy new HTML5-based client side web app.  The pages themselves were relatively static, but they were rendered using javascript based on data loaded via AJAX queries.
+This article discusses the paths I went along to mail pages from a fancy new HTML5-based client side web app in a Windows environment.  The pages themselves were relatively static, but they were rendered using Javascript based on data loaded via AJAX queries.
+
+The final script is at this [gist](https://gist.github.com/iainbryson/5ba37c6186fef035b403).
 
 ### Start with a Browser
 
-Fortunately, we have the ideal tool to render web pages: the browser.  All major browsers are scriptable to some degree.  To send our page we'll use IE (10, specifically) and script it using powershell.
+Fortunately, we have the ideal tool to render web pages: the browser.  All major browsers are scriptable to some degree.  To send our page we'll use IE (10, specifically) and script it using powershell since we're on Windows.
 
 {% highlight powershell %}
 $ie = new-object -com "InternetExplorer.Application"
@@ -36,7 +38,7 @@ while ($ie.Busy -or $ie.Document.readyState -ne "complete") {
 }
 {% endhighlight %}
 
-One unpleasant consequence of this is that evidently you must be running as administrator.  If you don't, you'll find the document member of the browser object to be null:
+One unpleasant requirement of this method is that you must be running as administrator.  If you don't, you'll find the document member of the browser object to be null.
 
 ### Lack of Style
 
@@ -55,7 +57,7 @@ foreach ($ss in $doc.styleSheets) {
 
 ### Next Stumbling Block: Outlook
 
-You'd think in 2012, with Microsoft's massive leaps forward in web standards conformance with IE that Outlook would use the same rendering engine and have no problems with basic CSS3.  You'd be [wrong](http://www.campaignmonitor.com/css/ "so, so wrong").  
+You'd think that with Microsoft's massive leaps forward in web standards conformance with IE that Outlook would use the same rendering engine and have no problems with basic CSS3.  You'd be [wrong](http://www.campaignmonitor.com/css/ "so, so wrong").  
 
 So now we have to rewrite the webpage to use fewer bells and whistles, right?  Not necessarily.  We already have a browser up with our page and *it* certainly knows how to render the page.  Can we pass its knowledge along to Outlook?
 
@@ -93,8 +95,6 @@ jQuery('*').each(function(e) {
 Next we have some pages with SVG.  This seems to be another area where Outlook's HTML mail rendering has difficulties.  
 
 Fortunately, there's a solution.  Yet another messy solution, but one that works.  Google has a wonderful library called [canvg](http://code.google.com/p/canvg/ "canvg") which [renders SVG into a canvas](http://stackoverflow.com/questions/3975499/convert-svg-to-image-jpeg-png-etc-in-the-browser).  A canvas can then be exported to an image file as a [data url](http://stackoverflow.com/questions/923885/capture-html-canvas-as-gif-jpg-png-pdf):
- 
-### Hello
 
 ```javascript
 
@@ -137,4 +137,9 @@ Now all the pieces are in place, and we're ready to actually send the email.
 ```powershell
 Send-MailMessage -To $to -From $from -BodyAsHtml -Body $bodyHtml -Subject $subject -SmtpServer smtphost -Attachments $attachments
 ```
+
+
+### The Gist
+
+<script src="https://gist.github.com/iainbryson/5ba37c6186fef035b403.js"></script>
 
