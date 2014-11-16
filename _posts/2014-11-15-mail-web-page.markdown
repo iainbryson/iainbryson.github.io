@@ -12,7 +12,7 @@ This article discusses the paths I went along to mail pages from a fancy new HTM
 
 Fortunately, we have the ideal tool to render web pages: the browser.  All major browsers are scriptable to some degree.  To send our page we'll use IE (10, specifically) and script it using powershell.
 
-```powershell
+{% highlight powershell %}
 $ie = new-object -com "InternetExplorer.Application"
 $ie.visible = $true
 $ie.navigate2($url)
@@ -29,7 +29,7 @@ while ($ie.Busy -or $ie.Document.readyState -ne "complete") {
     Start-Sleep -MilliSeconds 100
     Write-Host $ie.Document.readyState
 }
-```
+{% endhighlight %}
 
 One unpleasant consequence of this is that evidently you must be running as administrator.  If you don't, you'll find the document member of the browser object to be null:
 
