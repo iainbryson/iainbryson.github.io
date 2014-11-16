@@ -9,5 +9,6 @@ twitter_username: iainbryson
 github_username:  iainbryson
 
 # Build settings
-#markdown: kramdown
-markdown: GFM
+markdown: kramdown
+kramdown:
+  input: GFM
