@@ -1,4 +1,9 @@
-
+---
+layout: post
+title:  "Emailing Client-Side Web Pages"
+date:   2014-11-15 14:22:17
+categories: powershell web
+---
 
 # Emailing Client-Side Web Pages
 
