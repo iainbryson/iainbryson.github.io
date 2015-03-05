@@ -12,3 +12,5 @@ github_username:  iainbryson
 markdown: kramdown
 kramdown:
   input: GFM
+
+exclude: ['config.ru', 'Gemfile', 'Gemfile.lock', 'vendor']
