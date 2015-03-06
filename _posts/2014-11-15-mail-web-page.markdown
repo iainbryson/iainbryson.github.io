@@ -4,9 +4,6 @@ title:  "Emailing Client-Side Web Pages"
 date:   2014-11-15 14:22:17
 categories: powershell web
 ---
-
-# Emailing Client-Side Web Pages
-
 ### The Problem
 
 Sending an email of a webpage is pretty easy.  That is, it's easy if the page is static or you're generating the webpage on the server (e.g. with PHP or ASP.NET).  If it's not -- if you have some client-side code which alters the page -- then it's not so easy.

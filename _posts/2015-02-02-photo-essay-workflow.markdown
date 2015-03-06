@@ -3,6 +3,7 @@ layout: post
 title:  "Automated Photo Essay Workflow"
 date:   2015-02-01 14:22:17
 categories: wordpress photography
+img:   public/img/photo-essay.png
 tags:
 - wordpress
 - python
@@ -25,7 +26,7 @@ But that's not what I want to cover here.  I want to cover a small corner of the
 
 ### The Problem
 
-Here's what I want to do: I want to come back from an event, import all my photos into LightRoom and then publish from LightRoom to my blog as quickly as possible.  There are a bunch of plugins for LightRoom which claim to do the job, but they cost money and/or don't work with LR 4, which is what I use.  
+<img src="/public/img/photo-essay.png" style="display: inline; float: right; margin: auto; padding:0.2em; width: 65%;" ></img>Here's what I want to do: I want to come back from an event, import all my photos into LightRoom and then publish from LightRoom to my blog as quickly as possible.  There are a bunch of plugins for LightRoom which claim to do the job, but they cost money and/or don't work with LR 4, which is what I use.  
 
 I've got a little scripting skill, so maybe I can scratch my own itch.
 
