@@ -1,5 +1,5 @@
 # Site settings
-title: Iain's technical blog
+title: Iain's Technical Blog
 email: iain@iain-bryson.ca
 description: > # this means to ignore newlines until "baseurl:"
   Technical notes and experiences by Iain Bryson.
@@ -13,4 +13,4 @@ markdown: kramdown
 kramdown:
   input: GFM
 
-exclude: ['config.ru', 'Gemfile', 'Gemfile.lock', 'vendor']
+exclude: ['config.ru', 'Gemfile', 'Gemfile.lock', 'vendor', '2014-11-15-welcome-to-jekyll.markdown_', 'about.md_backup', 'test-site.sh']
