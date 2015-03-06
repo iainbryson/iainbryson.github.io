@@ -5,11 +5,19 @@ highlighter:         pygments
 #kramdown:
 #  input: GFM
 
+# Permalinks
+#
+# Use of `relative_permalinks` ensures post links from the index work properly.
+permalink:           pretty
+relative_permalinks: true
+
 # Site settings
 title: Iain's Technical Blog
+tagline:    'Peaceful Code'
 description: > # this means to ignore newlines until "baseurl:"
   Technical notes and experiences by Iain Bryson.
-baseurl: "" # the subpath of your site, e.g. /blog/
+baseurl:             / # the subpath of your site, e.g. /blog/
+paginate:            5
 url: "http://iainbryson.github.io" # the base hostname & protocol for your site
 twitter_username: iainbryson
 github_username:  iainbryson
@@ -20,15 +28,12 @@ author:
   url:               https://twitter.com/iainbryson
   email:             iain@iain-bryson.ca
 
-# Permalinks
-#
-# Use of `relative_permalinks` ensures post links from the index work properly.
-permalink:           pretty
-relative_permalinks: true
 
 
 # Custom vars - Lanyon
 version:             1.0.0
 
 
-exclude: ['config.ru', 'Gemfile', 'Gemfile.lock', 'vendor', '2014-11-15-welcome-to-jekyll.markdown_', 'about.md_backup', 'test-site.sh']
+exclude: ['config.ru', 'Gemfile', 'Gemfile.lock', 'vendor',
+          '2014-11-15-welcome-to-jekyll.markdown_', 'about.md_orig',
+          'about.md_backup', '_config.yml.orig', 'test-site.sh']

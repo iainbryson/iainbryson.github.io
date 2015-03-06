@@ -13,8 +13,6 @@ tags:
 - LightRoom
 ---
 
-# Towards a Better Photo Essay Workflow
-
 I've been [blogging][castaway-life] during my extended travels.  This means my usual clunky vacation photo management workflows are getting strained to their limits as I'm constantly going to interesting places to take pictures and write about them.  There is no "after I get back" time to lazily dump work into.  And any time I waste futzing with my computer is time I'm not spending enjoying the marvelous places I'm visiting.
 
 So it behoves me to take some of the technology-focus from my old life and attempt to make this part of my new life flow more smoothly.
