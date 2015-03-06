@@ -1,6 +1,12 @@
+# Dependencies
+markdown:            redcarpet
+highlighter:         pygments
+#markdown: kramdown
+#kramdown:
+#  input: GFM
+
 # Site settings
 title: Iain's Technical Blog
-email: iain@iain-bryson.ca
 description: > # this means to ignore newlines until "baseurl:"
   Technical notes and experiences by Iain Bryson.
 baseurl: "" # the subpath of your site, e.g. /blog/
@@ -8,9 +14,21 @@ url: "http://iainbryson.github.io" # the base hostname & protocol for your site
 twitter_username: iainbryson
 github_username:  iainbryson
 
-# Build settings
-markdown: kramdown
-kramdown:
-  input: GFM
+# About/contact
+author:
+  name:              Iain Bryson
+  url:               https://twitter.com/iainbryson
+  email:             iain@iain-bryson.ca
+
+# Permalinks
+#
+# Use of `relative_permalinks` ensures post links from the index work properly.
+permalink:           pretty
+relative_permalinks: true
+
+
+# Custom vars - Lanyon
+version:             1.0.0
+
 
 exclude: ['config.ru', 'Gemfile', 'Gemfile.lock', 'vendor', '2014-11-15-welcome-to-jekyll.markdown_', 'about.md_backup', 'test-site.sh']
