@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Expense Visualization"
-date:   2015-02-01 14:22:17
+date:   2015-03-23 14:22:17
 categories: visualization
 img:   public/img/cambodia-expenses.png
 tags:
@@ -12,7 +12,7 @@ tags:
 ---
 
 
-The first leg of [my travels][castaway-life] is over. Money is tight, so naturally I was curious to compare the costs of the various countries I visited.  I also wondered if I'd come close to my budget, or just blown past it.
+The first leg of [my travels][castaway-life] is over. Money is tight, so I was naturally curious to compare the costs of the various countries I visited.  I also wondered if I'd come close to my budget, or just blown past it.
 
 This analysis could have been handled entirely in Google Sheets. Google Sheets [^1] is where I kept track of the expenses so that would be entirely natural.
 
@@ -34,7 +34,7 @@ There are a couple of options for importing data from Google Sheets. I wanted th
 
 If you make the sheet public, you can use a client-side approach to querying the data via JSON, as described [here][public-sheet-query-via-json].  This is a cool technique and I almost used it, but I didn't want this data to be public in its raw form.  Not on any 'real' grounds — I'm not fearful of the security implications of the world knowing by spending habits — but rather as a matter of principle: I'd rather design something more general and in general one wouldn't want to share all the raw data all the time.
 
-So that left a server-side solution, something to authenticate in private and then proxy the data over to the client.  I found [this][accessing-google-spreadsheets-from-node-js] excellent writeup on how to do this from node.js, which I've been meaning to play with some more, so I ended up implementing that solution pretty much wholesale.
+So that left a server-side solution, something to authenticate in private and then proxy the data over to the client.  I found [this][accessing-google-spreadsheets-from-node-js] excellent writeup on how to do so from node.js, which I've been meaning to play with some more, so I ended up implementing that solution pretty much wholesale.
 
 As is typical of any visualization project, the first and lamest part of the work is mangling the data from its original format into one you can use.  In the case of this project, Google Sheets provides
 
@@ -48,7 +48,7 @@ data.rows[3]
 Object {1: "Cambodia", 2: "2/16/2015", 3: "=D3*VLOOKUP(E3, ExchangeRate!R3C1:R11C2 ,2,FALSE)", 4: 30, 5: "USD", 6: "Cambodia tourist visa", 7: "Miscellaneous"}
 ```
 
-These hashmaps don't work so well with `d3.js`'s array-focused data formats.
+These hashmaps don't work so well with `d3.js`'s array-focused data model.
 
 So the munging code takes the hashmaps, finds the header row then generates all the data rows as an array of hashmaps of `category : value`.
 
@@ -72,7 +72,7 @@ When munging the question is always whether to do it at the client or server sid
 
 #### Server Side
 
-Now the server design was party clear: a node.js JSON endpoint to serve the data.  Since I was already running the `express` web server, it was a simple matter to include a separate port to serve some static HTML pages for the client-side bits.
+Now the server design was party clear: a node.js JSON endpoint to serve the data.  Since I was running the `express` web server to do this, it was a simple matter to include a separate port to serve some static HTML pages for the client-side pieces also.
 
 The module `travel-data.js` loads the spreadsheet and exports the data as `budget_info`.  Then we set up two routes in express, `/` for the static site and `/data` for the JSON data.
 
@@ -116,7 +116,7 @@ exports.app = app;
 
 To visualize the data, I settled on two views: a daily bar chart with lines for the moving averages of the spends in each category and a top expenses.  These two views operate on one country at a time, selected by an option box.  In the future there could easily be a "all" countries mode which shows the views for all the data.
 
-Switching into the "top expenses" mode is accomplished with a button; you get out of it by clicking anywhere on the page.  This turned out to be much more natural than a toggle button or two buttons, especially on touch interfaces.  Essentially this approach is a modal dialog box.
+Switching into the "top expenses" mode is accomplished with a button; you get out of it by clicking anywhere on the page.  This turned out to be much more natural than a toggle button or two buttons, especially on touch interfaces.  This approach is akin to a modal dialog box.
 
 To give some visual cueing to tie the two views together, I decided to transition the bars representing the expenses from the bar chart to the stacked list of bars representing the top expenses.  So the biggest expenses fly out from their homes in the bar chart and stack in the center of the screen with their descriptions.
 
@@ -124,7 +124,7 @@ To give some visual cueing to tie the two views together, I decided to transitio
 
 Any sane web development today needs to work perfectly on mobile devices. I'd rather argue the side which says everything should mobile-only rather than desktop-only.  So this visualization needed to be responsive.
 
-The easiest option is the default: `d3.js` reders to SVG, which is itself scalable.  So just do nothing and users can resize the drawing at will.
+The easiest option is the default: `d3.js` renders to SVG, which is itself scalable.  So just do nothing and users can resize the drawing at will.
 
 There are problems with this approach.  Visual elements may fit on the screen and be perfectly rendered but they may also be tiny.  Too tiny to read comfortably.  The article ["Building Responsive Visualizations in d3.js"][building-responsive-visualizations-d3-js] elaborates on these problems and provides a solution:
 
@@ -135,13 +135,13 @@ There are problems with this approach.  Visual elements may fit on the screen an
 
 I add to this a third stage between the two: when the viewport gets to small, remove the bar charts but keep the axes and the lines.
 
-This approach entails moving a bunch of the geometry-specific code to a "`resize()`" function which gets called when the containing element changes size.  `resize()` can then make a bunch of decisions about what elements to render based on the size of he viewport.
+This approach entails moving a bunch of the geometry-specific code to a `resize()` function which gets called when the containing element changes size.  `resize()` can then make a bunch of decisions about what elements to render based on the size of he viewport.
 
 ##### Resize() notes
 
 In the example from the article, the new elements were re-rendered on resize by updating the scale and then calling the helper `d3.js` objects/functions to create/update the SVG elements:
 
-```javacript
+```javascript
 /* Update the axis with the new scale */
 graph.select('.x.axis')
   .attr("transform", "translate(0," + height + ")")
@@ -155,7 +155,7 @@ graph.selectAll('.line')
   .attr("d", line);
 ```
 
-This is great, but what do you do if you're making bar charts or rectangles?  When there's no canned `d3.svg.axis()` or `d3.svg.line()` to simply generate the SVG.
+This is great, but what do you do if you're making bar charts or rectangles?  When there's no canned `d3.svg.axis()` or `d3.svg.line()` to simply generate the SVG attributes based on the data; one typically sets the attributes directly.
 
 The solution I used was to split out the geometry attribute setting into separate functions, which then get `call`'ed in the resize function:
 
@@ -165,10 +165,10 @@ The solution I used was to split out the geometry attribute setting into separat
             g
                 .attr("width", (xScale(1)-xScale(0)) * 0.80 )
                 .attr("y", function(d) {
-                        console.assert( !isNaN(yScale(bar_stack_y0[d.category_idx][d.x])));
                         return yScale(bar_stack_y0[d.category_idx][d.x]+d.y); })
                 .attr("x", function(d) { return xScale(d.x); })
-                .attr("height", function(d) { return Math.abs(yScale(0) - yScale(d.y)); });
+                .attr("height", function(d) { return Math.abs(yScale(0) - yScale(d.y));
+         });
     }
     
     var seriesLabel = function(g) {
@@ -190,7 +190,7 @@ The solution I used was to split out the geometry attribute setting into separat
     };
 ```
 
-In the end though, the right design would be to save all geometry setting for the resize function, and make all visual elements rendered before `resize()` be invisible in the initial setup. 
+In the end though, the right design would be to save all geometry setting for the resize function, and make all visual elements rendered before `resize()` be invisible in the initial setup and simply avoid setting any of the geometric attributes upon creation. 
 
 #### Nuances
 
@@ -199,9 +199,9 @@ A few small visual nuances help make the rendering more pleasant:
 1. The bar chart is animated so the expenses grow from 0.  This is a nice transition into the chart.
 1. In the "Top Expenses" mode, the background is blended, giving it a frosted-glass look to keep it in the viewer's mind but minimize distractions.
 1. I originally wanted a moving average line for each expense category leading to the all-dates average at the right-hand side of the hard.  There is no built-in moving average interpolation in `d3.js`, so I had to write one, cribbing heavily from [this article][plot-rolling-moving-average-in-d3-js].
-1. I wanted to have the moving average series lines culminate in a label for the series. This makes more sense to be than the typical 'legend box' but was problematic: if the averages are close (e.g. if the responsive design causes them the average lines to be just a few pixels apart), the labels will overlap.
-    * My first attempt at a solution was to try to be clever: use `d3.js`'s [force-directed layout to lay the labels out][force-layout-of-d3-labels].  The step function would constrain the `x` coordinate to stay put, leaving the labels to move gracefully away from each other along a vertical line.  This worked, but the effect of the labels bouncing around at page load time was unplesant.
-    * The second attempt was uglier.  Query the sizes of the labels and offset them if they overlap.  This was faster, conceptually simpler, but made for messy code.  The visual effect was better however so that's the one I went with.
+1. I wanted to have the moving average series lines culminate in a label for the series. This makes more sense to me than the typical 'legend box' but was problematic: if the averages are close (e.g. if the responsive design causes them the average lines to be just a few pixels apart), the labels will overlap.
+    * My first attempt at a solution was to try to be clever: use `d3.js`'s [force-directed layout to lay the labels out][force-layout-of-d3-labels].  The step function would constrain the `x` coordinate to stay put, leaving the labels to move gracefully away from each other along a vertical line.  This worked, but the effect of the labels bouncing around at page load time was distracting.
+    * The second attempt was less elegant, but worked better.  Query the sizes of the labels and offset them if they overlap.  This was faster, conceptually simpler, but made for messy code.  The visual effect was better however so that's the one I went with.
     
 ### Visualization
 
