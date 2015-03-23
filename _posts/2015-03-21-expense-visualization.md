@@ -14,7 +14,7 @@ tags:
 
 The first leg of [my travels][castaway-life] is over. Money is tight, so I was naturally curious to compare the costs of the various countries I visited.  I also wondered if I'd come close to my budget, or just blown past it.
 
-This analysis could have been handled entirely in Google Sheets. Google Sheets [^1] is where I kept track of the expenses so that would be entirely natural.
+This analysis could have been handled entirely in Google Sheets. Google Sheets<sup>1/</sup> is where I kept track of the expenses so that would be entirely natural.
 
 But built-in charts aren't exactly what I wanted. I wanted more control over the presentation and some specific interactions designs. Besides, I wanted to refresh my skills after months away from code so the cost in time of this extravagance was worth it.
 
@@ -228,4 +228,4 @@ There are a series of insights from the visualizations [here][castaway-life-expe
 
 
 
-[^1]: Why Google sheets and not Mint? Most of the places I visited were cash-only and used multiple currencies.  If was easier to track that it in Sheets
+<sup>1/</sup> Why Google sheets and not Mint? Most of the places I visited were cash-only and used multiple currencies.  If was easier to track that it in Sheets
