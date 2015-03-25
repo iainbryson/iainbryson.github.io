@@ -13,7 +13,7 @@ relative_permalinks: true
 
 # Site settings
 title: Iain's Technical Blog
-tagline:    'Peaceful Code'
+tagline:    'Spacious Code'
 description: > # this means to ignore newlines until "baseurl:"
   Technical notes and experiences by Iain Bryson.
 baseurl:             / # the subpath of your site, e.g. /blog/
